@@ -1,5 +1,6 @@
 package com.zyl.springcloud.controller;
 
+import cn.hutool.json.JSONUtil;
 import com.zyl.springcloud.entities.CommonResult;
 import com.zyl.springcloud.entities.Payment;
 import com.zyl.springcloud.service.PaymentService;
@@ -8,7 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author zhuyoulin
@@ -29,7 +35,8 @@ public class PaymentController {
     public PaymentController(PaymentService paymentService) {
         this.paymentService = paymentService;
     }
-
+    @Resource
+    private DiscoveryClient discoveryClient;
     @PostMapping("payment")
     public CommonResult create (@RequestBody Payment payment) {
         try {
@@ -70,5 +77,32 @@ public class PaymentController {
             logger.error(e.getMessage(), e);
             return new CommonResult(50000, "service error");
         }
+    }
+    @GetMapping(value = "payment/discovery/info")
+    public Object discovery () {
+        String description = discoveryClient.description();
+        List<String>  services = discoveryClient.getServices();
+        List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
+        logger.info("order" + discoveryClient.getOrder());
+        logger.info("description:" + description);
+        if (services.isEmpty()) {
+            logger.warn("services is empty");
+        }
+        services.forEach(service -> {
+            logger.info("service: " + service);
+        });
+        if (instances.isEmpty()) {
+            logger.warn("instances is empty");
+        }
+        instances.forEach(instance -> {
+            logger.info("host: " + instance.getHost());
+            logger.info("port: " + instance.getPort());
+            logger.info("serviceId: " + instance.getServiceId());
+            logger.info("uri: " + instance.getUri());
+            logger.info("metadata: " + JSONUtil.toJsonStr(instance.getMetadata()));
+            logger.info("instanceId: " + instance.getInstanceId());
+            logger.info("scheme: " + instance.getScheme());
+        });
+        return discoveryClient;
     }
 }
