@@ -1,0 +1,16 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  # 配置文件git相关配置
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/zhuyoulin123/SpringcloudConfig/
+          search-paths: respo
+          username:
+          password:
+          default-label: main

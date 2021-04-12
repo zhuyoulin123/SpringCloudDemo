@@ -1,0 +1,12 @@
+server:
+  port: 8881
+
+spring:
+  application:
+    name: config-client
+  # 配置文件git相关配置
+  cloud:
+    config:
+      label: main
+      profile: dev
+      uri: http://127.0.0.1:8888
