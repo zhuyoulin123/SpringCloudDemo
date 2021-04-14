@@ -20,6 +20,7 @@
       <module>service-zuul</module>
       <module>config-server</module>
       <module>config-client</module>
+    <module>cloud-provider-payment8004</module>
   </modules>
 
   <!-- 统一管理jar包版本 -->
