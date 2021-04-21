@@ -1,0 +1,10 @@
+server:
+  port: 80
+spring:
+  application:
+    name: cloud-order-service
+  cloud:
+    consul:
+      host: 192.168.116.222
+      port: 8500
+      discovery: ${spring.application.name}

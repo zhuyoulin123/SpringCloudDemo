@@ -20,6 +20,10 @@
       <module>service-zuul</module>
       <module>config-server</module>
       <module>config-client</module>
+    <module>cloud-provider-payment8004</module>
+    <module>cloud-consumerzk-order80</module>
+      <module>cloud-providerconsul-payment8006</module>
+      <module>cloud-consumerconsul-order80</module>
   </modules>
 
   <!-- 统一管理jar包版本 -->

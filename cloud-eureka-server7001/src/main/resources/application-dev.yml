@@ -12,3 +12,9 @@ eureka:
     service-url:
       # 设置与Eureka Server交互的地址查询服务和注册服务都需要用这个地址
       defaultZone: http://eureka7002.com:7002/eureka/
+  # server:
+    # 关闭自我保护模式, 保证服务不可用时被剔除 eureka的自我保护模式设计思想基于分布式系统的CAP原则中AP
+    # C(Consistency 一致性) A(Availability 可用性) P(Partition tolerance 集群容错性) 三者最多同时满足两个
+    # enable-self-preservation: false
+    # 设置超时剔除时间
+    # eviction-interval-timer-in-ms: 2000

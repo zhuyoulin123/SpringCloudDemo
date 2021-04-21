@@ -1,0 +1,11 @@
+server:
+  port: 8004
+spring:
+  cloud:
+    # zookeeper 保证的是 CAP 中的 CP
+    zookeeper:
+      # zookeeper服务地址
+      connect-string: 192.168.116.222:2181
+  # 服务别名, 注册zookeeper到注册中心名称
+  application:
+    name: cloud-provider-payment

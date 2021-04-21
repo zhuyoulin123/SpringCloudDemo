@@ -6,6 +6,7 @@ import com.zyl.springcloud.util.StrUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,6 +54,22 @@ public class OrderController {
             e.printStackTrace();
             logger.error(e.getMessage(), e);
             return new CommonResult(50000, "service error");
+        }
+    }
+
+    @GetMapping("/consumer/payment/get/{id}")
+    public CommonResult<Payment> getPayment(@PathVariable("id")Long id) {
+        return restTemplate.getForObject(PAYMENT_URL + "/payment/" + id, CommonResult.class);
+    }
+
+    @GetMapping("/consumer/payment/getForEntity/{id}")
+    public CommonResult<Payment> getPaymentEntity(@PathVariable("id")Long id) {
+        ResponseEntity<CommonResult> entity = restTemplate
+                .getForEntity(PAYMENT_URL + "/payment/" + id, CommonResult.class);
+        if (entity.getStatusCode().is2xxSuccessful()) {
+            return entity.getBody();
+        } else {
+            return new CommonResult<>(entity.getStatusCodeValue(), "操作失败");
         }
     }
 }
