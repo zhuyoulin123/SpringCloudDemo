@@ -1,0 +1,13 @@
+server:
+  port: 8006
+spring:
+  cloud:
+    # consul 保证的是 CAP 中的 CP
+    consul:
+      host: 192.168.116.222
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+  # 服务别名, 注册consul到注册中心名称
+  application:
+    name: cloud-providerconsul-payment
